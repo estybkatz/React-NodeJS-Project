@@ -57,7 +57,7 @@ const CardComponent = ({
       if (!payload) {
         return;
       }
-      await axios.patch("/cards/card-like/" + id);
+      await axios.patch("/cards/" + id);
       onDeletefav(id);
       setfavState(!favState);
       toast.success("The change was made successfully");

@@ -3,19 +3,26 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import CardComponent from "../components/CardComponent";
+import StickyHeadTable from "../components/TableComponent";
 import { toast } from "react-toastify";
 import useQueryParams from "../hooks/useQueryParams";
 import { useSelector } from "react-redux";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ROUTES from "../routes/ROUTES";
+import TocIcon from "@mui/icons-material/Toc";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import TableRowComponent from "../components/TableRowComponent";
 
 const HomePage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
   const [cardsArr, setCardsArr] = useState(null);
+  const [currentView, setCurrentView] = useState(true);
 
   const navigate = useNavigate();
   let qparams = useQueryParams();
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
+  let viewCard = true;
+  let viewList = false;
 
   useEffect(() => {
     /*
@@ -23,7 +30,7 @@ const HomePage = () => {
       this is why we use the old promise way
     */
     axios
-      .get("/cards/cards")
+      .get("/cards")
       .then(({ data }) => {
         filterFunc(data);
       })
@@ -97,10 +104,47 @@ const HomePage = () => {
   const createCard = () => {
     navigate(ROUTES.CREATE);
   };
+  const changeView = () => {
+    // if (viewCard) {
+    //   viewCard = false;
+    //   viewList = true;
+    //   setCurrentView(viewList);
+    //   // return (viewCard = false);
+    // } else {
+    //   viewCard = true;
+    //   viewList = false;
+    //   setCurrentView(viewCard);
+    //   // return (viewCard = true);
+    // }
+    if (currentView) {
+      setCurrentView(false);
+      // return (viewCard = false);
+    } else {
+      setCurrentView(true);
+      // return (viewCard = true);
+    }
+  };
+  const change = () => {
+    if (currentView) {
+      setCurrentView(false);
+      // return (viewCard = false);
+    } else {
+      setCurrentView(true);
+      // return (viewCard = true);
+    }
+  };
+
+  //function homepage -> homeComponent(view,data)
+  //function homeComponent return view? <cardComponent>->array :tableArray->array;
+  //
   return (
     <Box>
       <h1>Cards page</h1>
       <h3>Here you can find cards of all categories</h3>
+      <Button onClick={changeView}>
+        <TocIcon />
+        <DashboardIcon />
+      </Button>
 
       {payload && payload.biz ? (
         <Button>
@@ -110,31 +154,41 @@ const HomePage = () => {
         ""
       )}
 
-      <Grid container spacing={2}>
-        {cardsArr.map((item) => (
-          <Grid item sm={6} xs={12} md={4} key={item._id + Date.now()}>
-            <CardComponent
-              id={item._id}
-              phone={item.phone}
-              address={item.street + " " + item.houseNumber + ", " + item.city}
-              cardNumber={item.bizNumber}
-              title={item.title}
-              subTitle={item.subTitle}
-              description={item.description}
-              img={item.image ? item.image.url : ""}
-              onDelete={handleDeleteFromInitialCardsArr}
-              onDeletefav={delete1}
-              onEdit={handleEditFromInitialCardsArr}
-              onInfo={handleMoreInformationFromInitialCardsArr}
-              canEdit={payload && payload.biz && payload.isAdmin}
-              canEditPrivate={payload && payload.biz}
-              card={item}
-              user_id={item.user_id}
-              isFav={payload && item.likes.includes(payload._id)}
-            />
-          </Grid>
-        ))}
-      </Grid>
+      {currentView ? (
+        <Grid container spacing={2}>
+          {cardsArr.map((item) => (
+            <Grid item sm={6} xs={12} md={4} key={item._id + Date.now()}>
+              <CardComponent
+                id={item._id}
+                phone={item.phone}
+                address={
+                  item.address.street +
+                  " " +
+                  item.address.houseNumber +
+                  ", " +
+                  item.address.city
+                }
+                cardNumber={item.bizNumber}
+                title={item.title}
+                subTitle={item.subTitle}
+                description={item.description}
+                img={item.image ? item.image.url : ""}
+                onDelete={handleDeleteFromInitialCardsArr}
+                onDeletefav={delete1}
+                onEdit={handleEditFromInitialCardsArr}
+                onInfo={handleMoreInformationFromInitialCardsArr}
+                canEdit={payload && payload.biz && payload.isAdmin}
+                canEditPrivate={payload && payload.biz}
+                card={item}
+                user_id={item.user_id}
+                isFav={payload && item.likes.includes(payload._id)}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <TableRowComponent />
+      )}
     </Box>
   );
 };
