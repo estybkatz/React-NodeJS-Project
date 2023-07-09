@@ -11,7 +11,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { Button, Typography } from "@mui/material";
-const TableRowComponent = ({
+const TableRowsComponent = ({
   img,
   title,
   subTitle,
@@ -68,30 +68,21 @@ const TableRowComponent = ({
   };
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      {/* <TableContainer sx={{ maxHeight: 440 }}> */}
-      <Table stickyHeader aria-label="sticky table">
-        <TableHead>
-          <TableRow>
-            {columns.map((item) => (
-              <TableCell key={item + Date.now()}>
-                <Typography>{item}</Typography>
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        {/* <TableBody>
-            <TableCell>{Name}</TableCell>
-            <TableCell>{phone}</TableCell>
-            <TableCell>{email}</TableCell>
-            <TableCell>{clubMember}</TableCell>
+      <TableContainer sx={{ maxHeight: 440 }}>
+        <Table aria-label="sticky table">
+          <TableBody>
+            <TableCell text-align="left">{Name}</TableCell>
+            <TableCell text-align="left">{phone}</TableCell>
+            <TableCell text-align="left">{email}</TableCell>
+            <TableCell text-align="left">{clubMember}</TableCell>
             <Button>
-              <TableCell>{linkToCard}</TableCell>
+              <TableCell text-align="left">{linkToCard}</TableCell>
             </Button>
-          </TableBody> */}
-      </Table>
-      {/* </TableContainer> */}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Paper>
   );
 };
 
-export default TableRowComponent;
+export default TableRowsComponent;

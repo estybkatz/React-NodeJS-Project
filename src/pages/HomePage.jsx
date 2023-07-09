@@ -1,4 +1,11 @@
-import { Box, Button, CircularProgress, Grid } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Grid,
+  TableBody,
+  TableCell,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -12,6 +19,7 @@ import ROUTES from "../routes/ROUTES";
 import TocIcon from "@mui/icons-material/Toc";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import TableRowComponent from "../components/TableRowComponent";
+import TableRowsComponent from "../components/TableRowsComponent";
 
 const HomePage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
@@ -141,11 +149,10 @@ const HomePage = () => {
     <Box>
       <h1>Cards page</h1>
       <h3>Here you can find cards of all categories</h3>
-      <Button onClick={changeView}>
+      <Button onClick={changeView} container spacing={2}>
         <TocIcon />
         <DashboardIcon />
       </Button>
-
       {payload && payload.biz ? (
         <Button>
           <AddCircleIcon onClick={createCard} />
@@ -153,7 +160,6 @@ const HomePage = () => {
       ) : (
         ""
       )}
-
       {currentView ? (
         <Grid container spacing={2}>
           {cardsArr.map((item) => (
@@ -187,7 +193,21 @@ const HomePage = () => {
           ))}
         </Grid>
       ) : (
-        <TableRowComponent />
+        <Grid container spacing={2}>
+          <TableRowComponent />
+          {cardsArr.map((item) => {
+            return (
+              <TableRowsComponent
+                key={item.title + Date.now()}
+                Name={item.title}
+                phone={item.phone}
+                email={item.email}
+                clubMember={item.subTitle}
+                linkToCard={item.url}
+              />
+            );
+          })}
+        </Grid>
       )}
     </Box>
   );
