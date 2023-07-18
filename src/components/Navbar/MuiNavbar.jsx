@@ -92,7 +92,7 @@ const MuiNavbar = () => {
             <NavArrayComponent
               linkArray={isLoggedIn ? authedPages : notAuthPages}
             />
-            {isLoggedIn && payload.biz ? (
+            {isLoggedIn && payload.isBusiness ? (
               <NavArrayComponent linkArray={BizPages} />
             ) : (
               ""
@@ -163,7 +163,7 @@ const MuiNavbar = () => {
                 onClick={handleCloseNavMenu}
               />
               <NavArrayComponent
-                linkArray={isLoggedIn && payload.biz ? BizPages : []}
+                linkArray={isLoggedIn && payload.isBusiness ? BizPages : []}
                 isMenu={true}
                 onClick={handleCloseNavMenu}
               />

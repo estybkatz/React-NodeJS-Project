@@ -1,14 +1,14 @@
 import { Alert, Grid, TextField } from "@mui/material";
 const mustFields = [
-  "title",
-  "subTitle",
-  "description",
+  "firstName",
+  "lastName",
   "phone",
-  "country",
+  "email",
+  "ReceptionDateAtTheOffice",
+  "BusinessDescription",
   "city",
   "street",
   "houseNumber",
-  "email",
 ];
 
 const CreateEditComponent = ({
@@ -18,6 +18,7 @@ const CreateEditComponent = ({
   inputsErrorsState,
 }) => {
   const isRequired = mustFields.includes(item);
+  if (item === "clubMember") return;
   return isRequired ? (
     <Grid item xs={12}>
       <TextField

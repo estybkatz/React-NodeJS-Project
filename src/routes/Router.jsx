@@ -22,6 +22,8 @@ import SandboxPage from "../pages/SandboxPage";
 import MoreInformationPage from "../pages/MoreInformation";
 import { useSelector } from "react-redux";
 import EditProtectedRoute from "../components/EditProtectedRoute";
+import TaskComponent from "../components/TaskComponennt";
+import TasksPage from "../pages/TasksPage";
 
 const Router = () => {
   const isLoggedIn = useSelector(
@@ -33,6 +35,7 @@ const Router = () => {
       <Route path={ROUTES.FAKEHOME} element={<Navigate to={ROUTES.HOME} />} />
       <Route path={ROUTES.ABOUT} element={<AboutPage />} />
       <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
+      <Route path={ROUTES.CREATETASK} element={<TasksPage />} />
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route
         path={ROUTES.FAV}

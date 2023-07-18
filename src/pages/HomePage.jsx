@@ -20,17 +20,15 @@ import TocIcon from "@mui/icons-material/Toc";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import TableRowComponent from "../components/TableRowComponent";
 import TableRowsComponent from "../components/TableRowsComponent";
-
+import Modal from "react-modal";
 const HomePage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
   const [cardsArr, setCardsArr] = useState(null);
   const [currentView, setCurrentView] = useState(true);
-
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   let qparams = useQueryParams();
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
-  let viewCard = true;
-  let viewList = false;
 
   useEffect(() => {
     /*
@@ -62,7 +60,7 @@ const HomePage = () => {
       setCardsArr(
         data.filter(
           (card) =>
-            card.title.startsWith(filter) || card.bizNumber.startsWith(filter)
+            card.firstName.startsWith(filter) || card.email.startsWith(filter)
         )
       );
       return;
@@ -109,7 +107,7 @@ const HomePage = () => {
 
   const delete1 = () => {};
 
-  const createCard = () => {
+  const createCustomer = () => {
     navigate(ROUTES.CREATE);
   };
   const changeView = () => {
@@ -132,15 +130,6 @@ const HomePage = () => {
       // return (viewCard = true);
     }
   };
-  const change = () => {
-    if (currentView) {
-      setCurrentView(false);
-      // return (viewCard = false);
-    } else {
-      setCurrentView(true);
-      // return (viewCard = true);
-    }
-  };
 
   //function homepage -> homeComponent(view,data)
   //function homeComponent return view? <cardComponent>->array :tableArray->array;
@@ -149,13 +138,13 @@ const HomePage = () => {
     <Box>
       <h1>Cards page</h1>
       <h3>Here you can find cards of all categories</h3>
-      <Button onClick={changeView} container spacing={2}>
+      <Button onClick={changeView}>
         <TocIcon />
         <DashboardIcon />
       </Button>
-      {payload && payload.biz ? (
+      {payload && payload.isBusiness ? (
         <Button>
-          <AddCircleIcon onClick={createCard} />
+          <AddCircleIcon onClick={createCustomer} />
         </Button>
       ) : (
         ""
@@ -168,23 +157,19 @@ const HomePage = () => {
                 id={item._id}
                 phone={item.phone}
                 address={
-                  item.address.street +
-                  " " +
-                  item.address.houseNumber +
-                  ", " +
-                  item.address.city
+                  item.street + " " + item.houseNumber + ", " + item.city
                 }
                 cardNumber={item.bizNumber}
-                title={item.title}
-                subTitle={item.subTitle}
-                description={item.description}
-                img={item.image ? item.image.url : ""}
+                title={item.firstName}
+                subTitle={item.ReceptionDateAtTheOffice}
+                description={item.BusinessDescription}
+                //img={item.image ? item.image.url : ""}
                 onDelete={handleDeleteFromInitialCardsArr}
                 onDeletefav={delete1}
                 onEdit={handleEditFromInitialCardsArr}
                 onInfo={handleMoreInformationFromInitialCardsArr}
-                canEdit={payload && payload.biz && payload.isAdmin}
-                canEditPrivate={payload && payload.biz}
+                canEdit={payload && payload.isBusiness && payload.isAdmin}
+                canEditPrivate={payload && payload.isBusiness}
                 card={item}
                 user_id={item.user_id}
                 isFav={payload && item.likes.includes(payload._id)}
@@ -198,12 +183,12 @@ const HomePage = () => {
           {cardsArr.map((item) => {
             return (
               <TableRowsComponent
-                key={item.title + Date.now()}
-                Name={item.title}
+                key={item._id + Date.now()}
+                Name={item.firstName}
                 phone={item.phone}
                 email={item.email}
-                clubMember={item.subTitle}
-                linkToCard={item.url}
+                clubMember={item.clubMember}
+                linkToCard={"link to card"}
               />
             );
           })}

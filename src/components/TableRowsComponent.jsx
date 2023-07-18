@@ -75,9 +75,10 @@ const TableRowsComponent = ({
             <TableCell text-align="left">{phone}</TableCell>
             <TableCell text-align="left">{email}</TableCell>
             <TableCell text-align="left">{clubMember}</TableCell>
-            <Button>
-              <TableCell text-align="left">{linkToCard}</TableCell>
-            </Button>
+
+            <TableCell text-align="left">
+              <Button>{linkToCard} </Button>
+            </TableCell>
           </TableBody>
         </Table>
       </TableContainer>

@@ -13,23 +13,22 @@ import validateCreateSchema from "../validation/createValidation";
 import { toast } from "react-toastify";
 import CachedIcon from "@mui/icons-material/Cached";
 import CreateEditComponent from "../components/CreateAndEditComponent";
+import { Checkbox, FormControlLabel } from "@mui/material";
 
 const CreateCardPage = () => {
   const [inputState, setInputState] = useState({
-    url: "",
-    alt: "",
-    title: "",
-    subTitle: "",
-    description: "",
+    firstName: "",
+    lastName: "",
     phone: "",
     email: "",
-    web: "",
-    state: "",
+    ReceptionDateAtTheOffice: "",
+    BusinessDescription: "",
     country: "",
     city: "",
     street: "",
     houseNumber: "",
-    zipCode: "",
+    zip: "",
+    clubMember: false,
   });
   let joiResponse = validateCreateSchema(inputState);
   const [inputsErrorsState, setInputsErrorsState] = useState(null);
@@ -42,7 +41,7 @@ const CreateCardPage = () => {
 
       if (!joiResponse) {
         //move to homepage
-        await axios.post("/cards/", inputState);
+        await axios.post("/cards/createCustomer", inputState);
         toast.success("A new business card has been created");
         navigate(-1);
       }
@@ -64,23 +63,27 @@ const CreateCardPage = () => {
     setInputsErrorsState(joiResponse);
   };
 
+  const handleClubChange = (ev) => {
+    let newInputState = JSON.parse(JSON.stringify(inputState));
+    newInputState["clubMember"] = ev.target.checked;
+    setInputState(newInputState);
+  };
+
   const resetForm = () => {
     let newInputState = JSON.parse(JSON.stringify(inputState));
     newInputState = {
-      url: "",
-      alt: "",
-      title: "",
-      subTitle: "",
-      description: "",
+      firstName: "",
+      lastName: "",
       phone: "",
       email: "",
-      web: "",
-      state: "",
+      ReceptionDateAtTheOffice: "",
+      clubMember: false,
+      BusinessDescription: "",
       country: "",
       city: "",
       street: "",
       houseNumber: "",
-      zipCode: "",
+      zip: "",
     };
 
     setInputState(newInputState);
@@ -111,7 +114,7 @@ const CreateCardPage = () => {
           <EditIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Create card
+          Create Customer
         </Typography>
         <Typography component="h2" variant="h5">
           Here you can create a new cards
@@ -142,6 +145,19 @@ const CreateCardPage = () => {
                 inputsErrorsState={inputsErrorsState}
               />
             ))}
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    id="club"
+                    value={inputState.clubMember}
+                    color="primary"
+                    onClick={handleClubChange}
+                  />
+                }
+                label="joining the club"
+              />
+            </Grid>
             <Grid item xs={12} sm={6}>
               <Button
                 size="large"

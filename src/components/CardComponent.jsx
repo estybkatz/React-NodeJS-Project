@@ -20,6 +20,9 @@ import CallIcon from "@mui/icons-material/Call";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import Modal from "react-modal";
+import { Navigate, Routes, useNavigate } from "react-router-dom";
+import ROUTES from "../routes/ROUTES";
 
 const CardComponent = ({
   img,
@@ -43,6 +46,8 @@ const CardComponent = ({
   );
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
   const [favState, setfavState] = useState(isFav);
+  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
   const handleDeleteBtnClick = () => {
     onDelete(id);
   };
@@ -65,11 +70,15 @@ const CardComponent = ({
       toast.error("error when change favorites cards, try later again");
     }
   };
+  const openModal = () => {
+    //setIsOpen(true);
+    navigate(ROUTES.CREATETASK);
+  };
   return (
     <Card square raised>
-      <CardActionArea onClick={handleInfoBtnClick}>
+      {/* <CardActionArea onClick={handleInfoBtnClick}>
         <CardMedia component="img" image={img} className="cardMedia" />
-      </CardActionArea>
+      </CardActionArea> */}
       <CardHeader
         title={title}
         subheader={subTitle}
@@ -113,7 +122,11 @@ const CardComponent = ({
           )}
         </Box>
         <Box sx={{ display: "flex", flex: 1, justifyContent: "flex-end" }}>
-          <IconButton color="primary" aria-label="add to shopping cart">
+          <IconButton
+            color="primary"
+            aria-label="add to shopping cart"
+            onClick={openModal}
+          >
             <CallIcon />
           </IconButton>
           {isLoggedIn ? (

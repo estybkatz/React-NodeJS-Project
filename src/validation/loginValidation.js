@@ -9,7 +9,11 @@ const loginSchema = Joi.object({
     .required()
     .email({ tlds: { allow: false } }),
   password: Joi.string()
-    .pattern(new RegExp("^(?=.*[A-Z])(?=.*[a-z]).{0,}$"))
+    .pattern(
+      new RegExp(
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
+      )
+    )
     .messages({
       "string.empty": "the password should not be empty",
       "string.pattern.base":

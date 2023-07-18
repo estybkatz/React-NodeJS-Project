@@ -8,124 +8,117 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import validateRegisterSchema from "../validation/registerValidation";
+import validateTaskSchema from "../validation/taskValidation";
 import ROUTES from "../routes/ROUTES";
 import axios from "axios";
 import { toast } from "react-toastify";
 import CachedIcon from "@mui/icons-material/Cached";
 import RegisterComponent from "../components/RegisterComponent";
-const RegisterPage = () => {
+import TaskComponent from "../components/TaskComponennt";
+import Modal from "react-modal";
+import { DatePicker } from "@mui/lab";
+
+import { TextField } from "@mui/material";
+const TasksPage = () => {
+  function generateTimestamp() {
+    const currentDate = new Date();
+    const day = String(currentDate.getDate()).padStart(2, "0");
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+    const year = currentDate.getFullYear();
+    const formattedDate = `${day}/${month}/${year}`;
+    return formattedDate;
+  }
+  const timestamp = generateTimestamp();
   const [inputState, setInputState] = useState({
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    phone: "",
-    email: "",
-    password: "",
-    url: "",
-    alt: "",
-    state: "",
-    country: "",
-    city: "",
-    street: "",
-    houseNumber: "",
-    zip: "",
-    biz: false,
+    task: "",
+    workerToDo: "",
+    dateOpened: timestamp,
+    lastDateToDo: "",
+    done: false,
   });
-  let joiResponse = validateRegisterSchema(inputState);
+  const [isOpen, setIsOpen] = useState(false);
+  let joiResponse = validateTaskSchema(inputState);
   const [inputsErrorState, setinputsErrorState] = useState(null);
   const navigate = useNavigate();
-  const handeleBtnClick = async (ev) => {
+  const handeleBtnClick = async (id) => {
     try {
-      joiResponse = validateRegisterSchema(inputState);
+      joiResponse = validateTaskSchema(inputState);
       if (joiResponse) {
         return;
       }
-      // if (inputState.zipCode == "") {
-      //   inputState.zipCode = null;
-      // }
 
-      await axios.post("auth/users/register", {
-        name: {
-          firstName: inputState.firstName,
-          middleName: inputState.middleName,
-          lastName: inputState.lastName,
-        },
-        phone: inputState.phone,
-        email: inputState.email,
-        password: inputState.password,
-        image: {
-          url: inputState.url,
-          alt: inputState.alt,
-        },
-
-        address: {
-          state: inputState.state,
-          country: inputState.country,
-          city: inputState.city,
-          street: inputState.street,
-          houseNumber: inputState.houseNumber,
-          zip: inputState.zip,
-        },
-        isBusiness: inputState.biz,
+      await axios.post("cards/tasks/" + id, {
+        task: inputState.task,
+        workerToDo: inputState.workerToDo,
+        dateOpened: inputState.dateOpened,
+        lastDateToDo: inputState.lastDateToDo,
+        done: inputState.done,
       });
-      toast.success(
-        "Welcome " + inputState.firstName + " " + inputState.lastName
-      );
-      navigate(ROUTES.LOGIN);
+      toast.success("The task whrited");
+      navigate(ROUTES.HOME);
     } catch {
-      toast.error("registered user was not done");
+      toast.error("registered task was not done");
     }
   };
   const handleInputChange = (ev) => {
     let newInputState = JSON.parse(JSON.stringify(inputState));
     newInputState[ev.target.id] = ev.target.value;
     setInputState(newInputState);
-    joiResponse = validateRegisterSchema(newInputState);
+    joiResponse = validateTaskSchema(newInputState);
     setinputsErrorState(joiResponse);
   };
-  const handleBizChange = (ev) => {
+  const handleDoneChange = (ev) => {
     let newInputState = JSON.parse(JSON.stringify(inputState));
-    newInputState["biz"] = ev.target.checked;
+    newInputState["done"] = ev.target.checked;
     setInputState(newInputState);
   };
-  const resetForm = () => {
-    let newInputState = JSON.parse(JSON.stringify(inputState));
-    newInputState = {
-      name: {
-        firstName: inputState.firstName,
-        middleName: inputState.middleName,
-        lastName: inputState.lastName,
-      },
-      phone: inputState.phone,
-      email: inputState.email,
-      password: inputState.password,
-      image: {
-        url: inputState.imageUrl,
-        alt: inputState.imageAlt,
-      },
-      state: inputState.state,
-      address: {
-        country: inputState.country,
-        city: inputState.city,
-        street: inputState.street,
-        houseNumber: inputState.houseNumber,
-        zip: inputState.zip,
-      },
-      isBusiness: inputState.biz,
-    };
-    setInputState(newInputState);
-    joiResponse = validateRegisterSchema(newInputState);
-    if (!joiResponse) {
-      return;
-    }
-    let newjoiResponse = JSON.parse(JSON.stringify(joiResponse));
-    Object.keys(newjoiResponse).forEach((index) => {
-      newjoiResponse[index] = "";
-    });
-    setinputsErrorState(newjoiResponse);
+  //   const resetForm = () => {
+  //     let newInputState = JSON.parse(JSON.stringify(inputState));
+  //     newInputState = {
+  //       name: {
+  //         firstName: inputState.firstName,
+  //         middleName: inputState.middleName,
+  //         lastName: inputState.lastName,
+  //       },
+  //       phone: inputState.phone,
+  //       email: inputState.email,
+  //       password: inputState.password,
+  //       image: {
+  //         url: inputState.imageUrl,
+  //         alt: inputState.imageAlt,
+  //       },
+  //       state: inputState.state,
+  //       address: {
+  //         country: inputState.country,
+  //         city: inputState.city,
+  //         street: inputState.street,
+  //         houseNumber: inputState.houseNumber,
+  //         zip: inputState.zip,
+  //       },
+  //       isBusiness: inputState.biz,
+  //     };
+  //     setInputState(newInputState);
+  //     joiResponse = validateRegisterSchema(newInputState);
+  //     if (!joiResponse) {
+  //       return;
+  //     }
+  //     let newjoiResponse = JSON.parse(JSON.stringify(joiResponse));
+  //     Object.keys(newjoiResponse).forEach((index) => {
+  //       newjoiResponse[index] = "";
+  //     });
+  //     setinputsErrorState(newjoiResponse);
+  //   };
+
+  const openModal = () => {
+    setIsOpen(true);
   };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  console.log(inputState);
   const keys = Object.keys(inputState);
+  console.log(keys);
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -138,28 +131,29 @@ const RegisterPage = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Sign up
+          Create new Task
         </Typography>
         <Box component="div" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
-            {keys.map((key) => (
-              <RegisterComponent
-                item={key}
-                label={key}
+            {keys.map((item) => (
+              <TaskComponent
+                item={item}
+                label={item}
                 inputState={inputState}
                 onChange={handleInputChange}
                 inputsErrorState={inputsErrorState}
-                key={key}
+                key={item}
               />
             ))}
+
             <Grid item xs={12}>
               <FormControlLabel
                 control={
                   <Checkbox
-                    id="biz"
-                    value={inputState.isBusiness}
+                    id="done"
+                    value={inputState.done}
                     color="primary"
-                    onClick={handleBizChange}
+                    onClick={handleDoneChange}
                   />
                 }
                 label="Signup as business."
@@ -176,7 +170,8 @@ const RegisterPage = () => {
                 CANCEL
               </Button>
             </Grid>
-            <Grid item xs={12} sm={6}>
+
+            {/* <Grid item xs={12} sm={6}>
               <Button
                 size="large"
                 fullWidth
@@ -185,7 +180,7 @@ const RegisterPage = () => {
                 onClick={resetForm}
                 endIcon={<CachedIcon />}
               ></Button>
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
               <Button
                 fullWidth
@@ -212,4 +207,4 @@ const RegisterPage = () => {
     </Container>
   );
 };
-export default RegisterPage;
+export default TasksPage;

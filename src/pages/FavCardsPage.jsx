@@ -19,8 +19,10 @@ const FavCardsPage = () => {
       useEffect cant handle async ()=>{}
       this is why we use the old promise way
     */
+
     axios
-      .get("/cards/get-my-fav-cards")
+      .get("cards/fav-cards")
+
       .then(({ data }) => {
         filterFunc(data);
       })
@@ -50,7 +52,8 @@ const FavCardsPage = () => {
       setCardsArr(
         data.filter(
           (card) =>
-            card.title.startsWith(filter) || card.bizNumber.startsWith(filter)
+            card.firstName.startsWith(filter) ||
+            card.bizNumber.startsWith(filter)
         )
       );
 
@@ -64,7 +67,7 @@ const FavCardsPage = () => {
       setCardsArr(
         newOriginalCardsArr.filter(
           (card) =>
-            card.title.startsWith(filter) || card.bizNumber.startsWith(filter)
+            card.firstName.startsWith(filter) || card.email.startsWith(filter)
         )
       );
     }
@@ -114,17 +117,17 @@ const FavCardsPage = () => {
                     item.street + " " + item.houseNumber + ", " + item.city
                   }
                   cardNumber={item.bizNumber}
-                  title={item.title}
-                  subTitle={item.subTitle}
-                  description={item.description}
-                  img={item.image ? item.image.url : ""}
+                  title={item.firstName}
+                  subTitle={item.ReceptionDateAtTheOffice}
+                  description={item.BusinessDescription}
+                  //img={item.image ? item.image.url : ""}
                   onDeletefav={delete1}
                   onDelete={handleDeleteFromInitialCardsArr}
                   onEdit={handleEditFromInitialCardsArr}
                   onInfo={handleMoreInformationFromInitialCardsArr}
-                  canEdit={payload && (payload.biz || payload.isAdmin)}
-                  canEditPrivate={payload && payload.biz}
-                  user_id={item.user_id}
+                  canEdit={payload && (payload.isBusiness || payload.isAdmin)}
+                  canEditPrivate={payload && payload.isBusiness}
+                  //user_id={item.user_id}
                   isFav={true}
                 />
               </Grid>

@@ -53,8 +53,9 @@ const LoginPage = () => {
       if (joiResponse) {
         return;
       }
-      const { data } = await axios.post("/users/login", inputState);
+      const { data } = await axios.post("auth/users/login", inputState);
       localStorage.setItem("token", data.token);
+      console.log("hello3");
       loggedIn();
       //move to homepage
       navigate(ROUTES.HOME);

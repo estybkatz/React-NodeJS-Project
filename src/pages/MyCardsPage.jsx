@@ -23,6 +23,8 @@ const MyCardsPage = () => {
     axios
       .get("/cards/my-cards")
       .then(({ data }) => {
+        console.log("data", data);
+
         filterFunc(data);
       })
       .catch(() => {
@@ -45,7 +47,7 @@ const MyCardsPage = () => {
       setCardsArr(
         data.filter(
           (card) =>
-            card.title.startsWith(filter) || card.bizNumber.startsWith(filter)
+            card.firstName.startsWith(filter) || card.email.startsWith(filter)
         )
       );
       return;
@@ -58,7 +60,7 @@ const MyCardsPage = () => {
       setCardsArr(
         newOriginalCardsArr.filter(
           (card) =>
-            card.title.startsWith(filter) || card.bizNumber.startsWith(filter)
+            card.firstName.startsWith(filter) || card.email.startsWith(filter)
         )
       );
     }
@@ -79,7 +81,7 @@ const MyCardsPage = () => {
   };
   const handleEditFromInitialCardsArr = (id) => {
     const selectedCards = cardsArr.find((card) => card._id == id);
-    navigate(`/edit/${id}`, { state: { user_id: selectedCards.user_id } }); //localhost:3000/edit/123213
+    navigate(`/edit/${id}`, { state: { user_id: selectedCards.user_id } }); //localhost:/edit/123213
   };
   const handleMoreInformationFromInitialCardsArr = (id) => {
     navigate(`/MInfo/${id}`);
@@ -121,16 +123,16 @@ const MyCardsPage = () => {
                     item.street + " " + item.houseNumber + ", " + item.city
                   }
                   cardNumber={item.bizNumber}
-                  title={item.title}
-                  subTitle={item.subTitle}
-                  description={item.description}
-                  img={item.image ? item.image.url : ""}
+                  title={item.firstName}
+                  subTitle={item.ReceptionDateAtTheOffice}
+                  description={item.BusinessDescription}
+                  //img={item.image ? item.image.url : ""}
                   onDelete={handleDeleteFromInitialCardsArr}
                   onDeletefav={delete1}
                   onEdit={handleEditFromInitialCardsArr}
                   onInfo={handleMoreInformationFromInitialCardsArr}
-                  canEdit={payload && payload.biz && payload.isAdmin}
-                  canEditPrivate={payload && payload.biz}
+                  canEdit={payload && payload.isBusiness && payload.isAdmin}
+                  canEditPrivate={payload && payload.isBusiness}
                   card={item}
                   user_id={item.user_id}
                   isFav={payload && item.likes.includes(payload._id)}

@@ -11,6 +11,7 @@ const ROUTES = {
   MYCARDS: "/myCards",
   SANDBOX: "/sandbox",
   MOREINFORMATIOMPAGE: "/moreInformation",
+  CREATETASK: "/createTask",
 };
 
 export default ROUTES;
