@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -19,7 +19,10 @@ import Modal from "react-modal";
 import { DatePicker } from "@mui/lab";
 
 import { TextField } from "@mui/material";
+import useQueryParams from "../hooks/useQueryParams";
 const TasksPage = () => {
+  let qparams = useQueryParams();
+  const { id } = useParams();
   function generateTimestamp() {
     const currentDate = new Date();
     const day = String(currentDate.getDate()).padStart(2, "0");
@@ -32,7 +35,7 @@ const TasksPage = () => {
   const [inputState, setInputState] = useState({
     task: "",
     workerToDo: "",
-    dateOpened: timestamp,
+    dateOpened: "",
     lastDateToDo: "",
     done: false,
   });
@@ -40,7 +43,7 @@ const TasksPage = () => {
   let joiResponse = validateTaskSchema(inputState);
   const [inputsErrorState, setinputsErrorState] = useState(null);
   const navigate = useNavigate();
-  const handeleBtnClick = async (id) => {
+  const handeleBtnClick = async () => {
     try {
       joiResponse = validateTaskSchema(inputState);
       if (joiResponse) {
@@ -137,6 +140,7 @@ const TasksPage = () => {
           <Grid container spacing={2}>
             {keys.map((item) => (
               <TaskComponent
+                id={item}
                 item={item}
                 label={item}
                 inputState={inputState}
@@ -194,13 +198,7 @@ const TasksPage = () => {
             </Grid>
           </Grid>
           <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link to={ROUTES.LOGIN}>
-                <Typography variant="body2">
-                  Already have an account? Sign in
-                </Typography>
-              </Link>
-            </Grid>
+            <Grid item></Grid>
           </Grid>
         </Box>
       </Box>

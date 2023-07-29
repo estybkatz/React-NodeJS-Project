@@ -2,7 +2,7 @@ import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { counterActions } from "../store/counter";
+import { counterActions } from "../../store/counter";
 
 const RP1 = () => {
   const [txt, setTxt] = useState("");

@@ -36,6 +36,7 @@ const CardComponent = ({
   onDeletefav,
   onEdit,
   onInfo,
+  onCreateTask,
   canEdit,
   canEditPrivate,
   user_id,
@@ -72,7 +73,8 @@ const CardComponent = ({
   };
   const openModal = () => {
     //setIsOpen(true);
-    navigate(ROUTES.CREATETASK);
+
+    onCreateTask(id);
   };
   return (
     <Card square raised>

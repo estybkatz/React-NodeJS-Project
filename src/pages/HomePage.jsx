@@ -5,6 +5,7 @@ import {
   Grid,
   TableBody,
   TableCell,
+  Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -100,7 +101,9 @@ const HomePage = () => {
   const handleMoreInformationFromInitialCardsArr = (id) => {
     navigate(`/MInfo/${id}`);
   };
-
+  const createtask = (id) => {
+    navigate(`/createTask/${id}`);
+  };
   if (!cardsArr) {
     return <CircularProgress />;
   }
@@ -130,7 +133,7 @@ const HomePage = () => {
       // return (viewCard = true);
     }
   };
-
+  const createWorker = () => {};
   //function homepage -> homeComponent(view,data)
   //function homeComponent return view? <cardComponent>->array :tableArray->array;
   //
@@ -142,10 +145,12 @@ const HomePage = () => {
         <TocIcon />
         <DashboardIcon />
       </Button>
-      {payload && payload.isBusiness ? (
-        <Button>
-          <AddCircleIcon onClick={createCustomer} />
-        </Button>
+      {payload && payload.isAdmin ? (
+        <Box>
+          <Button>
+            <AddCircleIcon onClick={createCustomer} />
+          </Button>
+        </Box>
       ) : (
         ""
       )}
@@ -169,6 +174,7 @@ const HomePage = () => {
                 onEdit={handleEditFromInitialCardsArr}
                 onInfo={handleMoreInformationFromInitialCardsArr}
                 canEdit={payload && payload.isBusiness && payload.isAdmin}
+                onCreateTask={createtask}
                 canEditPrivate={payload && payload.isBusiness}
                 card={item}
                 user_id={item.user_id}

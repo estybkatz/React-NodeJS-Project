@@ -7,6 +7,7 @@ const taskSchema = Joi.object({
   dateOpened: Joi.string().min(2).max(1024).required(),
   lastDateToDo: Joi.string().min(2).max(256).required(),
   done: Joi.boolean(),
+  customerID: Joi.string().hex().length(24),
 });
 const validateTaskSchema = (userInput) => validation(taskSchema, userInput);
 

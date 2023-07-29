@@ -71,14 +71,16 @@ const TableRowsComponent = ({
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table aria-label="sticky table">
           <TableBody>
-            <TableCell text-align="left">{Name}</TableCell>
-            <TableCell text-align="left">{phone}</TableCell>
-            <TableCell text-align="left">{email}</TableCell>
-            <TableCell text-align="left">{clubMember}</TableCell>
+            <TableRow>
+              <TableCell text-align="left">{Name}</TableCell>
+              <TableCell text-align="left">{phone}</TableCell>
+              <TableCell text-align="left">{email}</TableCell>
+              <TableCell text-align="left">{clubMember}</TableCell>
 
-            <TableCell text-align="left">
-              <Button>{linkToCard} </Button>
-            </TableCell>
+              <TableCell text-align="left">
+                <Button>{linkToCard} </Button>
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>

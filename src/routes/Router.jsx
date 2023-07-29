@@ -8,7 +8,7 @@ import ROUTES from "./ROUTES";
 import LoginPage from "../pages/LoginPage";
 import EditCardPage from "../pages/EditCardPage";
 import MyCardsPage from "../pages/MyCardsPage";
-import RP1 from "../pages/RP1";
+import RP1 from "../pages/NestedRoutePage/tasksForAdmin";
 import RP2 from "../pages/RP2";
 import ProtectedRoute from "../components/ProtectedRoute";
 import ProfilePage from "../pages/ProfilePage";
@@ -34,8 +34,8 @@ const Router = () => {
       <Route path={ROUTES.HOME} element={<HomePage />} />
       <Route path={ROUTES.FAKEHOME} element={<Navigate to={ROUTES.HOME} />} />
       <Route path={ROUTES.ABOUT} element={<AboutPage />} />
-      <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
-      <Route path={ROUTES.CREATETASK} element={<TasksPage />} />
+      {/* <Route path={ROUTES.REGISTER} element={<RegisterPage />} /> */}
+      <Route path={"/createTask/:id"} element={<TasksPage />} />
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route
         path={ROUTES.FAV}
@@ -103,7 +103,18 @@ const Router = () => {
         element={<ProtectedRoute element={<ProfilePage />} />}
       />
       <Route
-        path="/sandbox"
+        path={ROUTES.REGISTER}
+        element={
+          <SuperProtectedRoute
+            isAdmin={true}
+            // isBiz={true}
+            isLoggedIn={false}
+            element={<RegisterPage />}
+          />
+        }
+      />
+      <Route
+        path="/managementInterface"
         element={
           <SuperProtectedRoute
             isAdmin={true}
@@ -112,10 +123,10 @@ const Router = () => {
           />
         }
       >
-        <Route path="nestedpage1" element={<NestedPage1 />} />
-        <Route path="nestedpage2" element={<NestedPage2 />} />
-        <Route path="RP1" element={<RP1 />} />
-        <Route path="RP2" element={<RP2 />} />
+        <Route path="workersList" element={<NestedPage1 />} />
+        <Route path="customersList" element={<NestedPage2 />} />
+        <Route path="tasks" element={<RP1 />} />
+        {/* <Route path="RP2" element={<RP2 />} /> */}
       </Route>
       <Route path="*" element={<h1>404</h1>} />
     </Routes>

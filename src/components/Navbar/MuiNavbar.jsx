@@ -27,10 +27,7 @@ const pages = [
 //not logged in users
 const notAuthPages = [
   { label: "ABOUT", url: ROUTES.ABOUT },
-  {
-    label: "SIGNUP",
-    url: ROUTES.REGISTER,
-  },
+
   {
     label: "LOGIN",
     url: ROUTES.LOGIN,
@@ -52,7 +49,13 @@ const BizPages = [
   },
 ];
 
-const AdminPages = [{ label: "SANDBOX", url: ROUTES.SANDBOX }];
+const AdminPages = [
+  { label: "management interface", url: ROUTES.SANDBOX },
+  {
+    label: "REGISTER",
+    url: ROUTES.REGISTER,
+  },
+];
 
 const MuiNavbar = () => {
   const isLoggedIn = useSelector(

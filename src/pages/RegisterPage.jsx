@@ -22,15 +22,13 @@ const RegisterPage = () => {
     phone: "",
     email: "",
     password: "",
-    url: "",
-    alt: "",
     state: "",
     country: "",
     city: "",
     street: "",
     houseNumber: "",
     zip: "",
-    biz: false,
+    isAdmin: false,
   });
   let joiResponse = validateRegisterSchema(inputState);
   const [inputsErrorState, setinputsErrorState] = useState(null);
@@ -54,10 +52,10 @@ const RegisterPage = () => {
         phone: inputState.phone,
         email: inputState.email,
         password: inputState.password,
-        image: {
-          url: inputState.url,
-          alt: inputState.alt,
-        },
+        // image: {
+        //   url: inputState.url,
+        //   alt: inputState.alt,
+        // },
 
         address: {
           state: inputState.state,
@@ -67,14 +65,12 @@ const RegisterPage = () => {
           houseNumber: inputState.houseNumber,
           zip: inputState.zip,
         },
-        isBusiness: inputState.biz,
+        isAdmin: inputState.isAdmin,
       });
-      toast.success(
-        "Welcome " + inputState.firstName + " " + inputState.lastName
-      );
-      navigate(ROUTES.LOGIN);
+      toast.success("Employee registration was successfully completed");
+      // navigate(ROUTES.LOGIN);
     } catch {
-      toast.error("registered user was not done");
+      toast.error("registered was not done");
     }
   };
   const handleInputChange = (ev) => {
@@ -84,35 +80,48 @@ const RegisterPage = () => {
     joiResponse = validateRegisterSchema(newInputState);
     setinputsErrorState(joiResponse);
   };
-  const handleBizChange = (ev) => {
+  const handleAdminChange = (ev) => {
     let newInputState = JSON.parse(JSON.stringify(inputState));
-    newInputState["biz"] = ev.target.checked;
+    newInputState["isAdmin"] = ev.target.checked;
     setInputState(newInputState);
   };
   const resetForm = () => {
     let newInputState = JSON.parse(JSON.stringify(inputState));
     newInputState = {
-      name: {
-        firstName: inputState.firstName,
-        middleName: inputState.middleName,
-        lastName: inputState.lastName,
-      },
-      phone: inputState.phone,
-      email: inputState.email,
-      password: inputState.password,
-      image: {
-        url: inputState.imageUrl,
-        alt: inputState.imageAlt,
-      },
-      state: inputState.state,
-      address: {
-        country: inputState.country,
-        city: inputState.city,
-        street: inputState.street,
-        houseNumber: inputState.houseNumber,
-        zip: inputState.zip,
-      },
-      isBusiness: inputState.biz,
+      firstName: "",
+      middleName: "",
+      lastName: "",
+      phone: "",
+      email: "",
+      password: "",
+      state: "",
+      country: "",
+      city: "",
+      street: "",
+      houseNumber: "",
+      zip: "",
+      isAdmin: false,
+      // name: {
+      //   firstName: inputState.firstName,
+      //   middleName: inputState.middleName,
+      //   lastName: inputState.lastName,
+      // },
+      // phone: inputState.phone,
+      // email: inputState.email,
+      // password: inputState.password,
+      // image: {
+      //   url: inputState.imageUrl,
+      //   alt: inputState.imageAlt,
+      // },
+      // state: inputState.state,
+      // address: {
+      //   country: inputState.country,
+      //   city: inputState.city,
+      //   street: inputState.street,
+      //   houseNumber: inputState.houseNumber,
+      //   zip: inputState.zip,
+      // },
+      // isAdmin: inputState.isAdmin,
     };
     setInputState(newInputState);
     joiResponse = validateRegisterSchema(newInputState);
@@ -156,13 +165,13 @@ const RegisterPage = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    id="biz"
-                    value={inputState.isBusiness}
+                    id="isAdmin"
+                    value={inputState.isAdmin}
                     color="primary"
-                    onClick={handleBizChange}
+                    onClick={handleAdminChange}
                   />
                 }
-                label="Signup as business."
+                label="Signup as Admin"
               />
             </Grid>
             <Grid item xs={12} sm={6}>

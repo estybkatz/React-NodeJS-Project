@@ -1,20 +1,137 @@
-import { useEffect } from "react";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
+import TableRowComponent from "../../components/TableRowComponent";
+import TableRowsComponent from "../../components/TableRowsComponent";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-
-let intervalId;
+import axios from "axios";
+import useQueryParams from "../../hooks/useQueryParams";
 
 const NestedPage1 = () => {
-  useEffect(() => {
-    toast.success("component loaded");
-    intervalId = setInterval(() => {
-      toast.success("yes");
-    }, 1000);
+  const [originalWorkersArr, setOriginalWorkersArr] = useState(null);
 
-    return () => {
-      clearInterval(intervalId);
-      toast.success("component terminated");
-    };
+  const [workersArr, setWorkersArr] = useState(null);
+  let qparams = useQueryParams();
+  useEffect(() => {
+    /*
+      useEffect cant handle async ()=>{}
+      this is why we use the old promise way
+    */
+    axios
+      .get("/auth/users")
+      .then(({ data }) => {
+        console.log("data", data);
+        filterFunc(data);
+      })
+      .catch((err) => {
+        toast.error("Oops, Error retrieving data");
+      });
   }, []);
-  return <h2>Nested page 1</h2>;
+  const filterFunc = (data) => {
+    if (!originalWorkersArr && !data) {
+      return;
+    }
+    let filter = "";
+    if (qparams.filter) {
+      filter = qparams.filter;
+    }
+    if (!originalWorkersArr && data) {
+      /*
+        when component loaded and states not loaded
+      */
+      setOriginalWorkersArr(data);
+      setWorkersArr(
+        data.filter(
+          (card) =>
+            card.phone.startsWith(filter) || card.email.startsWith(filter)
+        )
+      );
+      return;
+    }
+    if (originalWorkersArr) {
+      /*
+        when all loaded and states loaded
+      */
+      let newOriginalCardsArr = JSON.parse(JSON.stringify(originalWorkersArr));
+      workersArr(
+        newOriginalCardsArr.filter(
+          (card) =>
+            card.phone.startsWith(filter) || card.email.startsWith(filter)
+        )
+      );
+    }
+  };
+  if (!workersArr) {
+    return <CircularProgress />;
+  }
+  const columns = [
+    "Name",
+    "last Name",
+    "phone",
+    "email",
+    "address",
+    "isAdmin",
+    "link to tasks",
+  ];
+  return (
+    <Box>
+      <h2>workers list</h2>
+      <Table stickyHeader aria-label="sticky table">
+        <TableHead>
+          <TableRow>
+            {columns.map((item) => (
+              <TableCell key={item + Date.now()}>
+                <Typography>{item}</Typography>
+              </TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+
+        {workersArr.map((item) => (
+          <TableBody>
+            <TableRow>
+              <TableCell key={item.name.firstName}>
+                {item.name.firstName}
+              </TableCell>
+              <TableCell key={item.name.lastName}>
+                {item.name.lastName}
+              </TableCell>
+              <TableCell key={item.phone}>{item.phone}</TableCell>
+              <TableCell key={item.email}>{item.email}</TableCell>
+              <TableCell
+                key={
+                  item.address.street +
+                  item.address.houseNumber +
+                  item.address.city
+                }
+              >
+                {item.address.street +
+                  "" +
+                  item.address.houseNumber +
+                  "" +
+                  item.address.city}
+              </TableCell>
+              <TableCell key={item.isAdmin}>
+                {item.isAdmin ? "yes" : "no"}
+              </TableCell>
+              <TableCell>
+                <Button>"link"</Button>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        ))}
+      </Table>
+      {/* </TableContainer> */}
+    </Box>
+  );
 };
 export default NestedPage1;

@@ -1,9 +1,11 @@
 import { Alert, Grid, TextField } from "@mui/material";
 //import { DatePicker } from "@mui/lab";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import DateAdapter from "@mui/lab/AdapterMoment"; // Replace with the appropriate adapter for your localization library
-import { TimePicker } from "@mui/lab";
+//import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+//import { LocalizationProvider } from "@mui/x-date-pickers";
+//import DateAdapter from "@mui/lab/AdapterMoment"; // Replace with the appropriate adapter for your localization library
+//import { TimePicker } from "@mui/lab";
+//import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+//import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"; // או כל פורט מתאים אחר
 
 //import { DatePicker } from "@mui/x-date-pickers";
 //import { DatePicker } from "@mui/x-date-pickers-pro/DatePicker";
@@ -31,6 +33,7 @@ const TaskComponent = ({
   inputsErrorState,
   inputState,
   onClick,
+  id,
 }) => {
   //   const isRequired = mustFields.includes(item);
   if (item === "done") return;
@@ -46,7 +49,7 @@ const TaskComponent = ({
         //fullWidth
         type={item}
         //autoFocus={item === "firstName"}
-        id={item}
+        id={id}
         label={label}
         onChange={onChange}
         onClick={onClick}
@@ -60,20 +63,6 @@ const TaskComponent = ({
           ))}
         </Alert>
       )}
-      {/* <Grid item xs={12}>
-        <DatePicker label="Basic date picker" />
-      </Grid> */}
-      <LocalizationProvider dateAdapter={DateAdapter}>
-        <DatePicker label="Basic date picker" />
-        {/* <DatePicker
-          label="Helper text example"
-          slotProps={{
-            TextField: {
-              helperText: "MM/DD/YYYY",
-            },
-          }}
-        /> */}
-      </LocalizationProvider>
     </Grid>
   );
 };
