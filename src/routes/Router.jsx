@@ -24,6 +24,10 @@ import { useSelector } from "react-redux";
 import EditProtectedRoute from "../components/EditProtectedRoute";
 import TaskComponent from "../components/TaskComponennt";
 import TasksPage from "../pages/TasksPage";
+import CostumerPrivtePage from "../pages/CustomerPrivtepage";
+//import CostumerPrivtePage from "../pages/CustomerPrivatePage";
+//import CostumerPrivatePage from "../pages/CustomerPrivtePage";
+//import CustomerPrivtePage from "../pages/CustomerPrivtePage";
 
 const Router = () => {
   const isLoggedIn = useSelector(
@@ -36,6 +40,7 @@ const Router = () => {
       <Route path={ROUTES.ABOUT} element={<AboutPage />} />
       {/* <Route path={ROUTES.REGISTER} element={<RegisterPage />} /> */}
       <Route path={"/createTask/:id"} element={<TasksPage />} />
+      <Route path={"/customer/:id"} element={<CostumerPrivtePage />} />
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route
         path={ROUTES.FAV}

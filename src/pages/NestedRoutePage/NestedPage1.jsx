@@ -15,10 +15,12 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import useQueryParams from "../../hooks/useQueryParams";
+import ROUTES from "../../routes/ROUTES";
+import { useNavigate } from "react-router-dom";
 
 const NestedPage1 = () => {
   const [originalWorkersArr, setOriginalWorkersArr] = useState(null);
-
+  const navigate = useNavigate();
   const [workersArr, setWorkersArr] = useState(null);
   let qparams = useQueryParams();
   useEffect(() => {
@@ -73,6 +75,9 @@ const NestedPage1 = () => {
   if (!workersArr) {
     return <CircularProgress />;
   }
+  const navigateToMoreInfoWorker = () => {
+    navigate(ROUTES.MOREINFORMATIOMPAGE);
+  };
   const columns = [
     "Name",
     "last Name",
@@ -99,19 +104,20 @@ const NestedPage1 = () => {
         {workersArr.map((item) => (
           <TableBody>
             <TableRow>
-              <TableCell key={item.name.firstName}>
+              <TableCell key={item.name.firstName + Date.now()}>
                 {item.name.firstName}
               </TableCell>
-              <TableCell key={item.name.lastName}>
+              <TableCell key={item.name.lastName + Date.now()}>
                 {item.name.lastName}
               </TableCell>
-              <TableCell key={item.phone}>{item.phone}</TableCell>
-              <TableCell key={item.email}>{item.email}</TableCell>
+              <TableCell key={item.phone + Date.now()}>{item.phone}</TableCell>
+              <TableCell key={item.email + Date.now()}>{item.email}</TableCell>
               <TableCell
                 key={
                   item.address.street +
                   item.address.houseNumber +
-                  item.address.city
+                  item.address.city +
+                  Date.now()
                 }
               >
                 {item.address.street +
@@ -120,11 +126,11 @@ const NestedPage1 = () => {
                   "" +
                   item.address.city}
               </TableCell>
-              <TableCell key={item.isAdmin}>
+              <TableCell key={item.isAdmin + Date.now()}>
                 {item.isAdmin ? "yes" : "no"}
               </TableCell>
-              <TableCell>
-                <Button>"link"</Button>
+              <TableCell key={Date.now()}>
+                <Button onClick={navigateToMoreInfoWorker}>"link"</Button>
               </TableCell>
             </TableRow>
           </TableBody>

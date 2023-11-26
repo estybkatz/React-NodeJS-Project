@@ -109,7 +109,9 @@ const HomePage = () => {
   }
 
   const delete1 = () => {};
-
+  const handleDetailsBtnClick = (id) => {
+    navigate(`/customer/${id}`);
+  };
   const createCustomer = () => {
     navigate(ROUTES.CREATE);
   };
@@ -179,6 +181,7 @@ const HomePage = () => {
                 card={item}
                 user_id={item.user_id}
                 isFav={payload && item.likes.includes(payload._id)}
+                more_details={handleDetailsBtnClick}
               />
             </Grid>
           ))}

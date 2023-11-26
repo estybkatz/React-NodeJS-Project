@@ -41,6 +41,7 @@ const CardComponent = ({
   canEditPrivate,
   user_id,
   isFav,
+  more_details,
 }) => {
   const isLoggedIn = useSelector(
     (bigPieBigState) => bigPieBigState.authSlice.isLoggedIn
@@ -57,6 +58,9 @@ const CardComponent = ({
   };
   const handleInfoBtnClick = () => {
     onInfo(id);
+  };
+  const handleDetailsBtnClick = () => {
+    more_details(id);
   };
   const handleFavBtnClick = async () => {
     try {
@@ -144,6 +148,9 @@ const CardComponent = ({
           ) : (
             ""
           )}
+        </Box>
+        <Box>
+          <IconButton onClick={handleDetailsBtnClick}>More Details</IconButton>
         </Box>
       </CardActions>
     </Card>
