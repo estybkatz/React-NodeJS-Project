@@ -25,6 +25,7 @@ import EditProtectedRoute from "../components/EditProtectedRoute";
 import TaskComponent from "../components/TaskComponennt";
 import TasksPage from "../pages/TasksPage";
 import CostumerPrivtePage from "../pages/CustomerPrivtepage";
+import WorkerPrivtePage from "../pages/workerTasksPrivate";
 //import CostumerPrivtePage from "../pages/CustomerPrivatePage";
 //import CostumerPrivatePage from "../pages/CustomerPrivtePage";
 //import CustomerPrivtePage from "../pages/CustomerPrivtePage";
@@ -41,6 +42,7 @@ const Router = () => {
       {/* <Route path={ROUTES.REGISTER} element={<RegisterPage />} /> */}
       <Route path={"/createTask/:id"} element={<TasksPage />} />
       <Route path={"/customer/:id"} element={<CostumerPrivtePage />} />
+      <Route path={"worker/:id"} element={<WorkerPrivtePage />} />
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route
         path={ROUTES.FAV}
@@ -131,6 +133,7 @@ const Router = () => {
         <Route path="workersList" element={<NestedPage1 />} />
         <Route path="customersList" element={<NestedPage2 />} />
         <Route path="tasks" element={<RP1 />} />
+        <Route path="worker/:id" element={<WorkerPrivtePage />} />
         {/* <Route path="RP2" element={<RP2 />} /> */}
       </Route>
       <Route path="*" element={<h1>404</h1>} />

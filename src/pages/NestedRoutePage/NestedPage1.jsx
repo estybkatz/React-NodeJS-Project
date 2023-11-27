@@ -75,8 +75,8 @@ const NestedPage1 = () => {
   if (!workersArr) {
     return <CircularProgress />;
   }
-  const navigateToMoreInfoWorker = () => {
-    navigate(ROUTES.MOREINFORMATIOMPAGE);
+  const navigateToMoreInfoWorker = (id) => {
+    navigate(`/worker/${id}`);
   };
   const columns = [
     "Name",
@@ -129,8 +129,10 @@ const NestedPage1 = () => {
               <TableCell key={item.isAdmin + Date.now()}>
                 {item.isAdmin ? "yes" : "no"}
               </TableCell>
-              <TableCell key={Date.now()}>
-                <Button onClick={navigateToMoreInfoWorker}>"link"</Button>
+              <TableCell key={item._id + Date.now()}>
+                <Button onClick={() => navigateToMoreInfoWorker(item._id)}>
+                  "link"
+                </Button>
               </TableCell>
             </TableRow>
           </TableBody>

@@ -10,8 +10,9 @@ const ROUTES = {
   CREATE: "/create",
   MYCARDS: "/myCards",
   SANDBOX: "/managementInterface",
-  MOREINFORMATIOMPAGE: "/moreInformation",
+  WORKER: "/worker/:id",
   CREATETASK: "/createTask",
+  MOREINFORMATIOMPAGE: "/MInfo",
 };
 
 export default ROUTES;

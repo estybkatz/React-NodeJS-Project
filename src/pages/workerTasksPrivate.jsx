@@ -25,9 +25,9 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-const CostumerPrivtePage = () => {
+const WorkerPrivtePage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
-  const [cardData, setCardData] = useState(null);
+  const [workerData, setWorkerData] = useState(null);
   const [taskData, setTaskData] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ const CostumerPrivtePage = () => {
     */
 
     axios
-      .get("cards/tasks/" + id)
+      .get("auth/users/userCard/" + id)
 
       .then(({ data }) => {
         console.log(data);
@@ -49,6 +49,7 @@ const CostumerPrivtePage = () => {
       })
 
       .catch((err) => {
+        console.log(id);
         toast.error("Oops2");
       });
   }, []);
@@ -60,12 +61,12 @@ const CostumerPrivtePage = () => {
     */
 
     axios
-      .get("cards/" + id)
+      .get("auth/users/" + id)
 
       .then(({ data }) => {
         console.log(data);
         //   filterFunc(data);
-        setCardData(data);
+        setWorkerData(data);
       })
 
       .catch((err) => {
@@ -80,7 +81,7 @@ const CostumerPrivtePage = () => {
     "worker to Do",
   ];
 
-  if (!cardData) {
+  if (!workerData) {
     return <CircularProgress />;
   }
 
@@ -88,38 +89,38 @@ const CostumerPrivtePage = () => {
     <Box>
       <Card square raised>
         <CardHeader
-          title={cardData.firstName}
-          subheader={cardData.lastName}
+          title={workerData.firstName}
+          subheader={workerData.lastName}
           //   onClick={handleInfoBtnClick}
         ></CardHeader>
         <CardContent>
           <hr />
-          <Typography>{"Phone: " + cardData.phone}</Typography>
+          <Typography>{"Phone: " + workerData.phone}</Typography>
           <Typography>
             {"Address: " +
               " " +
-              cardData.street +
+              workerData.street +
               " " +
-              cardData.houseNumber +
+              workerData.houseNumber +
               " " +
-              cardData.city +
+              workerData.city +
               " " +
-              cardData.country +
+              workerData.country +
               " " +
-              cardData.zip}
+              workerData.zip}
           </Typography>
-          <Typography>{"Card Number: " + cardData.cardNumber}</Typography>
+          <Typography>{"Card Number: " + workerData.cardNumber}</Typography>
           <Typography variant="body1" color="white">
-            {"Email: " + cardData.email}
-          </Typography>
-          <Typography variant="body1" color="white">
-            {"ReceptionDateAtTheOffice: " + cardData.ReceptionDateAtTheOffice}
+            {"Email: " + workerData.email}
           </Typography>
           <Typography variant="body1" color="white">
-            {"clubMember: " + cardData.clubMember}
+            {"ReceptionDateAtTheOffice: " + workerData.ReceptionDateAtTheOffice}
           </Typography>
           <Typography variant="body1" color="white">
-            {"BusinessDescription: " + cardData.BusinessDescription}
+            {"clubMember: " + workerData.clubMember}
+          </Typography>
+          <Typography variant="body1" color="white">
+            {"BusinessDescription: " + workerData.BusinessDescription}
           </Typography>
           <hr />
           <h2>tasks for the costumer</h2>
@@ -164,4 +165,4 @@ const CostumerPrivtePage = () => {
     </Box>
   );
 };
-export default CostumerPrivtePage;
+export default WorkerPrivtePage;
