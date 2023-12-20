@@ -109,7 +109,7 @@ const TasksPage = () => {
         lastDateToDo: inputState.lastDateToDo,
         done: inputState.done,
       });
-      toast.success("The task whrited");
+      toast.success("The task writed");
       navigate(ROUTES.HOME);
     } catch {
       toast.error("registered task was not done");

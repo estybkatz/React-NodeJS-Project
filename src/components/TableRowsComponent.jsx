@@ -67,24 +67,24 @@ const TableRowsComponent = ({
     }
   };
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table aria-label="sticky table">
-          <TableBody>
-            <TableRow>
-              <TableCell text-align="left">{Name}</TableCell>
-              <TableCell text-align="left">{phone}</TableCell>
-              <TableCell text-align="left">{email}</TableCell>
-              <TableCell text-align="left">{clubMember}</TableCell>
+    // <Paper sx={{ width: "100%", overflow: "hidden" }}>
+    //<TableContainer sx={{ maxHeight: 440 }}>
+    <Table aria-label="sticky table">
+      <TableBody>
+        <TableRow>
+          <TableCell text-align="left">{Name}</TableCell>
+          <TableCell text-align="left">{phone}</TableCell>
+          <TableCell text-align="left">{email}</TableCell>
+          <TableCell text-align="left">{clubMember}</TableCell>
 
-              <TableCell text-align="left">
-                <Button>{linkToCard} </Button>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Paper>
+          <TableCell text-align="left">
+            <Button>{linkToCard} </Button>
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+    //</TableContainer>
+    // </Paper>
   );
 };
 

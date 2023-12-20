@@ -41,7 +41,7 @@ const Router = () => {
       <Route path={ROUTES.ABOUT} element={<AboutPage />} />
       {/* <Route path={ROUTES.REGISTER} element={<RegisterPage />} /> */}
       <Route path={"/createTask/:id"} element={<TasksPage />} />
-      <Route path={"/customer/:id"} element={<CostumerPrivtePage />} />
+      <Route path={"costumer/:id"} element={<CostumerPrivtePage />} />
       <Route path={"worker/:id"} element={<WorkerPrivtePage />} />
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route
@@ -133,7 +133,8 @@ const Router = () => {
         <Route path="workersList" element={<NestedPage1 />} />
         <Route path="customersList" element={<NestedPage2 />} />
         <Route path="tasks" element={<RP1 />} />
-        <Route path="worker/:id" element={<WorkerPrivtePage />} />
+        {/* <Route path="worker/:id" element={<WorkerPrivtePage />} />
+        <Route path="costumer/:id" element={<CostumerPrivtePage />} /> */}
         {/* <Route path="RP2" element={<RP2 />} /> */}
       </Route>
       <Route path="*" element={<h1>404</h1>} />
