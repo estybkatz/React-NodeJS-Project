@@ -22,9 +22,23 @@ import axios from "axios";
 import useQueryParams from "../../hooks/useQueryParams";
 const RP1 = () => {
   const [originaltasksArr, setOriginaltasksArr] = useState(null);
-
+  const [employees, setEmployees] = useState([]);
+  const [customers, setCustomers] = useState([]);
   const [tasksArr, setTasksArr] = useState(null);
   let qparams = useQueryParams();
+  useEffect(() => {
+    // בטעינת הדף, נבצע בקשת HTTP לשרת
+    axios
+      .get("/auth/users")
+      .then((response) => {
+        // קבלנו את רשימת העובדים מהשרת
+        setEmployees(response.data);
+        console.log("response.data", response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching employees:", error);
+      });
+  }, []);
   useEffect(() => {
     /*
       useEffect cant handle async ()=>{}
@@ -38,6 +52,22 @@ const RP1 = () => {
       })
       .catch((err) => {
         toast.error("Oops, Error retrieving data");
+      });
+  }, []);
+  useEffect(() => {
+    /*
+      useEffect cant handle async ()=>{}
+      this is why we use the old promise way
+    */
+    axios
+      .get("/cards")
+      .then((response) => {
+        // קבלנו את רשימת העובדים מהשרת
+        console.log("response.data!!!", response.data);
+        setCustomers(response.data);
+      })
+      .catch((err) => {
+        toast.error("Oops, Error retrieving data", err);
       });
   }, []);
   const filterFunc = (data) => {
@@ -74,6 +104,16 @@ const RP1 = () => {
       );
     }
   };
+  const whoIsTheWorker = () => {
+    tasksArr.map((item) =>
+      employees.map((item2) => {
+        if (item2._id === item.id) {
+          console.log("item2.name", item2.name);
+          return item2.name;
+        }
+      })
+    );
+  };
   if (!tasksArr) {
     return <CircularProgress />;
   }
@@ -98,7 +138,7 @@ const RP1 = () => {
           </TableRow>
         </TableHead>
 
-        {tasksArr.map((item) => (
+        {/* {tasksArr.map((item) => (
           <TableBody>
             <TableRow>
               <TableCell key={item.customerID + Date.now()}>
@@ -112,17 +152,35 @@ const RP1 = () => {
                 {item.lastDateToDo}
               </TableCell>
               <TableCell key={item.workerToDo + Date.now()}>
-                {item.workerToDo}
+{ employees.map((item2) =>
+      (item2._id === item.id) ?  item2.name : null}
               </TableCell>
-              {/* <TableCell key={item.isAdmin + Date.now()}>
-                {item.isAdmin ? "yes" : "no"}
-              </TableCell>
-              <TableCell key={Date.now()}>
-                <Button>"link"</Button>
-              </TableCell> */}
             </TableRow>
           </TableBody>
-        ))}
+        ))} */}
+        <TableBody>
+          {tasksArr.map((item) => (
+            <TableRow key={item._id}>
+              <TableCell>
+                {customers.map((item2) =>
+                  item2._id === item.customerID
+                    ? item2.firstName + " " + item2.lastName
+                    : null
+                )}
+              </TableCell>
+              <TableCell>{item.task}</TableCell>
+              <TableCell>{item.dateOpened}</TableCell>
+              <TableCell>{item.lastDateToDo}</TableCell>
+              <TableCell>
+                {employees.map((item2) =>
+                  item2._id === item.workerToDo
+                    ? item2.name.firstName + " " + item2.name.lastName
+                    : null
+                )}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
       </Table>
       {/* </TableContainer> */}
     </Box>

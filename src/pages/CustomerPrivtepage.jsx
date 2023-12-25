@@ -25,6 +25,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 const CostumerPrivtePage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
   const [cardData, setCardData] = useState(null);
@@ -83,7 +84,9 @@ const CostumerPrivtePage = () => {
   if (!cardData) {
     return <CircularProgress />;
   }
-
+  const goBack = () => {
+    navigate(-1);
+  };
   return (
     <Box>
       <Card square raised>
@@ -123,6 +126,9 @@ const CostumerPrivtePage = () => {
           </Typography>
           <hr />
           <h2>tasks for the costumer</h2>
+          <Button onClick={goBack}>
+            <ArrowBackIcon />
+          </Button>
           <Box>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>

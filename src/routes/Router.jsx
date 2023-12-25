@@ -26,6 +26,8 @@ import TaskComponent from "../components/TaskComponennt";
 import TasksPage from "../pages/TasksPage";
 import CostumerPrivtePage from "../pages/CustomerPrivtepage";
 import WorkerPrivtePage from "../pages/workerTasksPrivate";
+import MyTasksPage from "../pages/MyTasksPage";
+import MyDoneTasksPage from "../pages/MyDoneTsksPage";
 //import CostumerPrivtePage from "../pages/CustomerPrivatePage";
 //import CostumerPrivatePage from "../pages/CustomerPrivtePage";
 //import CustomerPrivtePage from "../pages/CustomerPrivtePage";
@@ -39,7 +41,8 @@ const Router = () => {
       <Route path={ROUTES.HOME} element={<HomePage />} />
       <Route path={ROUTES.FAKEHOME} element={<Navigate to={ROUTES.HOME} />} />
       <Route path={ROUTES.ABOUT} element={<AboutPage />} />
-      {/* <Route path={ROUTES.REGISTER} element={<RegisterPage />} /> */}
+      <Route path={ROUTES.MYTASKS} element={<MyTasksPage />} />
+      <Route path={ROUTES.MYDONETASK} element={<MyDoneTasksPage />} />
       <Route path={"/createTask/:id"} element={<TasksPage />} />
       <Route path={"costumer/:id"} element={<CostumerPrivtePage />} />
       <Route path={"worker/:id"} element={<WorkerPrivtePage />} />

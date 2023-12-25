@@ -26,6 +26,9 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+
+//import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 //import { CheckBox } from "@mui/icons-material";
 const WorkerPrivtePage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
@@ -72,10 +75,11 @@ const WorkerPrivtePage = () => {
         // //   filterFunc(data);
         // delete newData._id;
         // delete newData.__v;
+
         setTaskData(data);
+
         // console.log("newData", newData);
       })
-
       .catch((err) => {
         console.log(id);
         toast.error("Oops2");
@@ -206,7 +210,10 @@ const WorkerPrivtePage = () => {
             {"BusinessDescription: " + workerData.BusinessDescription}
           </Typography> */}
           <hr />
-          <h2>Tasks for the costumer</h2>
+          <h2>Tasks for the worker</h2>
+          <Button onClick={() => navigate(-1)}>
+            <ArrowBackIcon />
+          </Button>
           <Box>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>

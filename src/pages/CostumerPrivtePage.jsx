@@ -25,6 +25,8 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+//import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 const CostumerPrivtePage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
   const [costumerData, setCostumerData] = useState(null);
@@ -113,6 +115,9 @@ const CostumerPrivtePage = () => {
           </Typography> */}
           <hr />
           <h2>tasks for the costumer</h2>
+          <Button>
+            <ArrowBackIcon />
+          </Button>
           <Box>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>

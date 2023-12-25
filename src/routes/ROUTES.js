@@ -13,6 +13,8 @@ const ROUTES = {
   WORKER: "/worker/:id",
   CREATETASK: "/createTask",
   MOREINFORMATIOMPAGE: "/MInfo",
+  MYTASKS: "/myTasks",
+  MYDONETASK: "/myDoneTasks",
 };
 
 export default ROUTES;

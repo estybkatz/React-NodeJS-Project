@@ -39,6 +39,7 @@ const authedPages = [
   { label: "ABOUT", url: ROUTES.ABOUT },
 
   { label: "FAV CARDS", url: ROUTES.FAV },
+  { label: "MY TASKS", url: ROUTES.MYTASKS },
 ];
 
 //admin/biz pages
