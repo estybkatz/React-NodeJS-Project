@@ -19,29 +19,30 @@ import { toast } from "react-toastify";
 const MoreInformationPage = () => {
   const { id } = useParams();
   const [inputState, setInputState] = useState(null);
+  const [taskState, setTasksState] = useState(null);
   const navigate = useNavigate();
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get("/cards/card/" + id);
+        const { data } = await axios.get("/cards/" + id);
         let newInputState = {
           ...data,
         };
-        if (data.image && data.image.url) {
-          newInputState.url = data.image.url;
-        } else {
-          newInputState.url = "";
-        }
-        if (data.image && data.image.alt) {
-          newInputState.alt = data.image.alt;
-        } else {
-          newInputState.alt = "";
-        }
-        delete newInputState.image;
+        // if (data.image && data.image.url) {
+        //   newInputState.url = data.image.url;
+        // } else {
+        //   newInputState.url = "";
+        // }
+        // if (data.image && data.image.alt) {
+        //   newInputState.alt = data.image.alt;
+        // } else {
+        //   newInputState.alt = "";
+        // }
+        // delete newInputState.image;
         delete newInputState.likes;
         delete newInputState._id;
         delete newInputState.user_id;
-        delete newInputState.bizNumber;
+        // delete newInputState.bizNumber;
         delete newInputState.__v;
 
         let dataArr = Object.keys(data);
@@ -58,6 +59,18 @@ const MoreInformationPage = () => {
         );
       }
     })();
+  }, [id]);
+  useEffect(() => {
+    axios
+      .get("/cards/tasks/" + id)
+      .then((response) => {
+        console.log("data", response.data);
+        //filterFunc(data);
+        setTasksState(response.data);
+      })
+      .catch((err) => {
+        toast.error("Oops, Error retrieving data");
+      });
   }, [id]);
   const handleCancelBtnClick = (ev) => {
     navigate(-1);

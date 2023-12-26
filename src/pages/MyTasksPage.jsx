@@ -33,6 +33,7 @@ const MyTasksPage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
   //const [costumerData, setCostumerData] = useState(null);
   const [taskData, setTaskData] = useState([]);
+  const [customers, setCustomers] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
   let qparams = useQueryParams();
@@ -78,7 +79,22 @@ const MyTasksPage = () => {
       });
   }, []);
   console.log(taskData);
-
+  useEffect(() => {
+    /*
+      useEffect cant handle async ()=>{}
+      this is why we use the old promise way
+    */
+    axios
+      .get("/cards")
+      .then((response) => {
+        // קבלנו את רשימת העובדים מהשרת
+        console.log("response.data!!!", response.data);
+        setCustomers(response.data);
+      })
+      .catch((err) => {
+        toast.error("Oops, Error retrieving data", err);
+      });
+  }, []);
   const columns = [
     "customer name",
     "task",
@@ -182,26 +198,21 @@ const MyTasksPage = () => {
                 ))}
               </TableRow>
             </TableHead>
-            {taskData.map((item) => (
-              // <Grid item sm={6} xs={12} md={4} key={item._id + Date.now()}>
-              <TableBody>
-                <TableRow>
-                  <TableCell key={item.customerID + Date.now()}>
-                    {item.customerID}
+            <TableBody>
+              {taskData.map((item) => (
+                <TableRow key={item._id}>
+                  <TableCell>
+                    {customers.map((item2) =>
+                      item2._id === item.customerID
+                        ? item2.firstName + " " + item2.lastName
+                        : null
+                    )}
                   </TableCell>
-                  <TableCell key={item.task + Date.now()}>
-                    {item.task}
-                  </TableCell>
-                  <TableCell key={item.dateOpened + Date.now()}>
-                    {item.dateOpened}
-                  </TableCell>
-                  <TableCell key={item.lastDateToDo + Date.now()}>
-                    {item.lastDateToDo}
-                  </TableCell>
-                  <TableCell key={item.workerToDo + Date.now()}>
-                    {item.workerToDo}
-                  </TableCell>
-                  <TableCell key={item.done + Date.now()}>
+                  <TableCell>{item.task}</TableCell>
+                  <TableCell>{item.workerToDo}</TableCell>
+                  <TableCell>{item.dateOpened}</TableCell>
+                  <TableCell>{item.lastDateToDo}</TableCell>
+                  <TableCell>
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -229,12 +240,11 @@ const MyTasksPage = () => {
                     </Button>
                   </TableCell>
                 </TableRow>
-              </TableBody>
-              // </Grid>
-            ))}
+              ))}
+              ;
+            </TableBody>
           </Table>
         </Box>
-        {/* </CardContent>*/}
       </Card>
     </Box>
   );

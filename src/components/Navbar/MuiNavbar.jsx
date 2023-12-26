@@ -51,7 +51,7 @@ const BizPages = [
 ];
 
 const AdminPages = [
-  { label: "management interface", url: ROUTES.SANDBOX },
+  { label: "MANAGEMENT-INTERFACE", url: ROUTES.SANDBOX },
   {
     label: "REGISTER",
     url: ROUTES.REGISTER,

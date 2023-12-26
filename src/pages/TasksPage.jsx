@@ -205,11 +205,12 @@ const TasksPage = () => {
               />
             ))}
 
-            <Grid item xs={12}>
-              <FormControl item xs={12}>
+            <Grid item xs={6}>
+              <FormControl>
                 {/* <InputLabel id="employee-label">Choose an employee</InputLabel> */}
                 <Select
                   labelId="employee-label"
+                  label="workerToDo"
                   //id="employee-select"
                   id="workerToDo"
                   value={selectedEmployeeId}
@@ -231,7 +232,7 @@ const TasksPage = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -243,8 +244,8 @@ const TasksPage = () => {
                 }
                 label="Signup as business."
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            </Grid> */}
+            <Grid item xs={12}>
               <Button
                 variant="contained"
                 fullWidth

@@ -129,11 +129,12 @@ const CardComponent = ({
         </Box>
         <Box sx={{ display: "flex", flex: 1, justifyContent: "flex-end" }}>
           <IconButton
-            color="primary"
+            color="white"
             aria-label="add to shopping cart"
             onClick={openModal}
           >
-            <CallIcon />
+            Add-Task
+            {/* <CallIcon /> */}
           </IconButton>
           {isLoggedIn ? (
             <IconButton

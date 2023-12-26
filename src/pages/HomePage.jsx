@@ -110,7 +110,7 @@ const HomePage = () => {
 
   const delete1 = () => {};
   const handleDetailsBtnClick = (id) => {
-    navigate(`/customer/${id}`);
+    navigate(`/MInfo/${id}`);
   };
   const createCustomer = () => {
     navigate(ROUTES.CREATE);
